@@ -1,0 +1,103 @@
+﻿FUNCTION "Block_1" : Void
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_TEMP 
+      prevTankLevel : DInt;
+   END_VAR
+
+
+BEGIN
+	
+	CASE "Global DB".Process_Step OF
+	        
+	    1:
+	        
+	        "Block_3"(eqp := "Global DB".Valve1,
+	                  timer := "IEC_Timer_0_DB_4",
+	                  tank := "Global DB".Tank1);
+	      
+	        
+	        ;
+	        
+	        
+	    2:
+	        
+	        "Block_3"(eqp := "Global DB".Heater,
+	                  timer := "IEC_Timer_0_DB_5",
+	                  tank := "Global DB".Tank1);
+	        ;
+	        
+	        
+	    3:
+	        "Block_3"(eqp := "Global DB".Mixer,
+	                  timer := "IEC_Timer_0_DB_6",
+	                  tank := "Global DB".Tank1);
+	        ;
+	        
+	        
+	    4:
+	 
+	        IF ("Global DB".Process_Count < 5) THEN
+	            
+	            
+	            
+	            "Global DB".Tank2.tankLevel := "Global DB".prevLevel + (DINT_TO_REAL(TIME_TO_DINT("IEC_Timer_0_DB_7".ET)) / 250.0);
+	            "Global DB".Tank1.tankLevel := 100 - DINT_TO_REAL(TIME_TO_DINT("IEC_Timer_0_DB_7".ET)) / 50.0;
+	            
+	            
+	            IF ("IEC_Timer_0_DB_7".Q) THEN
+	                
+	                
+	                "Global DB".prevLevel := "Global DB".Tank2.tankLevel;
+	                IF ("Global DB".Tank2.isTankFull) THEN
+	                    "Global DB".Process_Step := 5;
+	                    "Global DB".Process_Count := 0;
+	                ELSE
+	                    "Global DB".Process_Count += 1;
+	                    "Global DB".Process_Step := 1;
+	                END_IF;
+	                
+	            END_IF;
+	            
+	            
+	        END_IF;
+	        
+	     5:
+	
+	         "Global DB".Tank2.tankLevel := 100 - DINT_TO_REAL(TIME_TO_DINT("IEC_Timer_0_DB_8".ET))/ 50.0;
+	         
+	         IF("IEC_Timer_0_DB_8".Q) THEN
+	         "Global DB".Process_Step := 1;
+	         "Global DB".prevLevel := 0;
+	         
+	        END_IF
+	         
+	         ;
+	        
+	        
+	        
+	END_CASE;
+	
+	"IEC_Timer_0_DB_7".TON(IN := "Global DB".Process_Step = 4,
+	                       PT := T#5s);
+	
+	"IEC_Timer_0_DB_8".TON(IN := "Global DB".Process_Step = 5,
+	                       PT := T#5s);
+	
+	IF ("Global DB".Tank1.tankLevel = 100) THEN
+	    "Global DB".Tank1.isTankFull := TRUE
+	    ;
+	ELSE
+	    "Global DB".Tank1.isTankFull := FALSE;
+	    
+	END_IF;
+	
+	IF ("Global DB".Tank2.tankLevel = 100) THEN
+	    "Global DB".Tank2.isTankFull := TRUE
+	    ;
+	ELSE
+	    "Global DB".Tank2.isTankFull := FALSE;
+	    
+	END_IF;
+END_FUNCTION
+
