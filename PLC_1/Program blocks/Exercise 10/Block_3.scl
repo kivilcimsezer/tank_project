@@ -20,7 +20,7 @@ BEGIN
 	#eqp.commandOn := TRUE;
 	
 	
-	    
+	
 	"IEC_Timer_0_DB_4".TON(
 	                       IN := ("Global DB".Process_Step = 1),
 	                       PT := T#5s
@@ -34,36 +34,32 @@ BEGIN
 	);
 	
 	
-	
-	
-	
-	
 	"IEC_Timer_0_DB_6".TON(
 	                       IN := ("Global DB".Process_Step = 3),
 	                       PT := T#5s
 	                       
 	);
 	
+	(*TEST*)
 	
-	  
-	    CASE #eqp.type OF
-	        0:
-	            #tank.tankLevel := DINT_TO_REAL(TIME_TO_DINT(#timer.ET)) / 50.0;
-	            
-	        1..2:
-	            #eqp.isProcessFinished := TRUE;
-	            
-	            
-	    END_CASE;
-	    
+	CASE #eqp.type OF
+	    0:
+	        #tank.tankLevel := DINT_TO_REAL(TIME_TO_DINT(#timer.ET)) / 50.0;
+	        
+	    1..2:
+	        #eqp.isProcessFinished := TRUE;
+	        
+	        
+	END_CASE;
 	
-	    IF ( #timer.Q) THEN
-	        #eqp.commandOn := FALSE;
-	        #eqp.commandOff := TRUE;
-	        "Global DB".Process_Step += 1
-	        ;
-	    END_IF;
-	    
-	 
+	
+	IF (#timer.Q) THEN
+	    #eqp.commandOn := FALSE;
+	    #eqp.commandOff := TRUE;
+	    "Global DB".Process_Step += 1
+	    ;
+	END_IF;
+	
+	
 END_FUNCTION
 
