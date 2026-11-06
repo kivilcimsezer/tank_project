@@ -7,14 +7,14 @@
       <InstanceOfName>IEC_TIMER</InstanceOfName>
       <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
   <Section Name="Static">
-    <Member Name="PT" Datatype="Time" />
-    <Member Name="ET" Datatype="Time">
+    <Member Name="PT" Datatype="Time" Remanence="Retain" />
+    <Member Name="ET" Datatype="Time" Remanence="Retain">
       <AttributeList>
         <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
       </AttributeList>
     </Member>
-    <Member Name="IN" Datatype="Bool" />
-    <Member Name="Q" Datatype="Bool">
+    <Member Name="IN" Datatype="Bool" Remanence="Retain" />
+    <Member Name="Q" Datatype="Bool" Remanence="Retain">
       <AttributeList>
         <BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute>
       </AttributeList>

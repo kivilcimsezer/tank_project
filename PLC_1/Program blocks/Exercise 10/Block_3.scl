@@ -1,65 +1,76 @@
-﻿FUNCTION "Block_3" : Void
-{ S7_Optimized_Access := 'TRUE' }
-VERSION : 0.1
-   VAR_IN_OUT 
-      eqp : "Equipment";
-      "timer" {InstructionName := 'IEC_TIMER'; LibVersion := '1.0'} : IEC_TIMER;
-      tank : "Tank";
-   END_VAR
-
-   VAR_TEMP 
-      isNotTank : Bool;
-      currentStep : Int;
-      currentStepOld : Int;
-      isStepDifferent : Bool;
-   END_VAR
+﻿Option Explicit
+Function action
 
 
-BEGIN
-	
-	#eqp.commandOn := TRUE;
-	
-	
-	
-	"IEC_Timer_0_DB_4".TON(
-	                       IN := ("Global DB".Process_Step = 1),
-	                       PT := T#5s
-	                       
-	);
-	
-	"IEC_Timer_0_DB_5".TON(
-	                       IN := ("Global DB".Process_Step = 2),
-	                       PT := T#5s
-	                       
-	);
-	
-	
-	"IEC_Timer_0_DB_6".TON(
-	                       IN := ("Global DB".Process_Step = 3),
-	                       PT := T#5s
-	                       
-	);
-	
-	(*TEST*)
-	
-	CASE #eqp.type OF
-	    0:
-	        #tank.tankLevel := DINT_TO_REAL(TIME_TO_DINT(#timer.ET)) / 50.0;
-	        
-	    1..2:
-	        #eqp.isProcessFinished := TRUE;
-	        
-	        
-	END_CASE;
-	
-	
-	IF (#timer.Q) THEN
-	    #eqp.commandOn := FALSE;
-	    #eqp.commandOff := TRUE;
-	    "Global DB".Process_Step += 1
-	    ;
-	END_IF;
-	
-	
-END_FUNCTION
+Dim mixer_stage
+Set mixer_stage = HMIRuntime.Tags("mixer_stage")
 
+Dim Stirrer,Stirrer45,Stirrer90,Stirrer135,pw
+'Set pw = HMIRuntime.Screens("Main").ScreenItems("Picture Window2")
+'Set overviewScreen = HMIRuntime.Screens(pw.ScreenName)
+'Set stirrer = overviewScreen.ScreenItems("stirrer")
+
+
+Set Stirrer = HMIRuntime.Screens("Overview").ScreenItems("stirrer")
+'MsgBox Stirrer.AccessPath
+
+'Set Stirrer45 = HMIRuntime.Screens("Overview.Pdl").ScreenItems("stirrer45.FPT")
+'Set Stirrer90 = HMIRuntime.Screens("Overview.Pdl").ScreenItems("stirrer90.FPT")
+'Set Stirrer135 = HMIRuntime.Screens("Overview.Pdl").ScreenItems("stirrer135.FPT")
+mixer_stage.Read
+
+Select Case mixer_stage.Value
+
+
+
+Case 0
+
+'HMIRuntime.Screens("Overview.Pdl").ScreenItems("stirrer.FPT") = True
+'HMIRuntime.Screens("Overview.Pdl").ScreenItems("stirrer45.FPT") = False
+'HMIRuntime.Screens("Overview.Pdl").ScreenItems("stirrer90.FPT") = False
+'HMIRuntime.Screens("Overview.Pdl").ScreenItems("stirrer135.FPT") = False
+
+'MsgBox  mixer_stage.Value
+
+
+Case 1
+'MsgBox  mixer_stage.Value
+
+'HMIRuntime.Screens("Overview.Pdl").ScreenItems("stirrer.FPT") = 0
+'HMIRuntime.Screens("Overview.Pdl").ScreenItems("stirrer45.FPT") = 1
+'HMIRuntime.Screens("Overview.Pdl").ScreenItems("stirrer90.FPT") = 0
+'HMIRuntime.Screens("Overview.Pdl").ScreenItems("stirrer135.FPT") = 0
+
+
+Case 2
+'Stirrer.Visible = 0
+'Stirrer45.Visible = 0
+'Stirrer90.Visible = 1
+'Stirrer135.Visible = 0
+
+
+Case 3
+'Stirrer.Visible = 0
+'Stirrer45.Visible = 0
+'Stirrer90.Visible = 0
+'Stirrer135.Visible = 1
+
+
+End Select
+
+If mixer_stage.Value  = 3 Then
+
+  mixer_stage.Value = 0
+Else
+
+mixer_stage.Value = mixer_stage.Value + 1
+
+End If
+
+mixer_stage.Write
+MsgBox  mixer_stage.Read
+
+
+
+ 
+End Function

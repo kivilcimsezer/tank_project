@@ -9,6 +9,10 @@
     <Member Name="tankLevel" Datatype="Int" />
     <Member Name="isEmpty" Datatype="Bool" />
     <Member Name="type" Datatype="Bool" />
+    <Member Name="capacity" Datatype="Int" />
+    <Member Name="prevLevel" Datatype="Int" />
+    <Member Name="isHeated" Datatype="Bool" />
+    <Member Name="isMixed" Datatype="Bool" />
   </Section>
 </Sections></Interface>
       <Name>Tank</Name>

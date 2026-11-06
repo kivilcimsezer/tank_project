@@ -5,16 +5,38 @@
     <AttributeList>
       <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
   <Section Name="Static">
-    <Member Name="Valve1" Datatype="&quot;Equipment&quot;" />
+    <Member Name="Valve1" Datatype="&quot;Equipment&quot;">
+      <Sections>
+        <Section Name="None">
+          <Member Name="valveFlowRate" Datatype="DInt">
+            <StartValue>20</StartValue>
+          </Member>
+        </Section>
+      </Sections>
+    </Member>
     <Member Name="Valve2" Datatype="&quot;Equipment&quot;">
       <AttributeList>
         <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
       </AttributeList>
+      <Sections>
+        <Section Name="None">
+          <Member Name="valveFlowRate" Datatype="DInt">
+            <StartValue>20</StartValue>
+          </Member>
+        </Section>
+      </Sections>
     </Member>
     <Member Name="Valve3" Datatype="&quot;Equipment&quot;">
       <AttributeList>
         <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
       </AttributeList>
+      <Sections>
+        <Section Name="None">
+          <Member Name="valveFlowRate" Datatype="DInt">
+            <StartValue>100</StartValue>
+          </Member>
+        </Section>
+      </Sections>
     </Member>
     <Member Name="Heater" Datatype="&quot;Equipment&quot;">
       <AttributeList>
@@ -51,22 +73,40 @@
     <Member Name="Process_Count" Datatype="Int" />
     <Member Name="isTankHeated" Datatype="Bool" />
     <Member Name="isTankMixed" Datatype="Bool" />
-    <Member Name="Tank1" Datatype="&quot;Tank&quot;" />
+    <Member Name="Tank1" Datatype="&quot;Tank&quot;">
+      <Sections>
+        <Section Name="None">
+          <Member Name="capacity" Datatype="Int">
+            <StartValue>100</StartValue>
+          </Member>
+        </Section>
+      </Sections>
+    </Member>
     <Member Name="Tank2" Datatype="&quot;Tank&quot;">
       <AttributeList>
         <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
       </AttributeList>
+      <Sections>
+        <Section Name="None">
+          <Member Name="capacity" Datatype="Int">
+            <StartValue>500</StartValue>
+          </Member>
+        </Section>
+      </Sections>
     </Member>
     <Member Name="positive_edge" Datatype="Bool">
       <AttributeList>
         <BooleanAttribute Name="SetPoint" SystemDefined="true">true</BooleanAttribute>
       </AttributeList>
     </Member>
-    <Member Name="prevLevel" Datatype="DInt" />
+    <Member Name="positive_edge_stop" Datatype="Bool" />
+    <Member Name="prevLevelTank2" Datatype="DInt" />
+    <Member Name="prevLevelTank1" Datatype="DInt" />
+    <Member Name="Scada_Stop" Datatype="Bool" />
+    <Member Name="current_step" Datatype="Int" />
   </Section>
 </Sections></Interface>
-      <MemoryLayout>Optimized</MemoryLayout>
-      <MemoryReserve>100</MemoryReserve>
+      <MemoryLayout>Standard</MemoryLayout>
       <Name>Global DB</Name>
       <Namespace />
       <Number>7</Number>

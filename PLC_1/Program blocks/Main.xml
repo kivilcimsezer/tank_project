@@ -40,20 +40,25 @@
       </MultilingualText>
       <SW.Blocks.CompileUnit ID="3" CompositionName="CompileUnits">
         <AttributeList>
-          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
-  <Parts>
-    <Call UId="21">
-      <CallInfo Name="Block_2" BlockType="FC" />
-    </Call>
-  </Parts>
-  <Wires>
-    <Wire UId="22">
-      <Powerrail />
-      <NameCon UId="21" Name="en" />
-    </Wire>
-  </Wires>
-</FlgNet></NetworkSource>
-          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+          <NetworkSource><StatementList xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StatementList/v5">
+  <StlStatement UId="21">
+    <StlToken Text="EMPTY_LINE" />
+  </StlStatement>
+  <StlStatement UId="24">
+    <StlToken Text="CALL" />
+    <Access Scope="Call">
+      <CallInfo Name="FC_Traffic_Lights" BlockType="FB">
+        <Instance Scope="GlobalVariable">
+          <Component Name="FC_Traffic_Lights_DB_1" />
+        </Instance>
+      </CallInfo>
+    </Access>
+  </StlStatement>
+  <StlStatement UId="22">
+    <StlToken Text="EMPTY_LINE" />
+  </StlStatement>
+</StatementList></NetworkSource>
+          <ProgrammingLanguage>STL</ProgrammingLanguage>
         </AttributeList>
         <ObjectList>
           <MultilingualText ID="4" CompositionName="Comment">

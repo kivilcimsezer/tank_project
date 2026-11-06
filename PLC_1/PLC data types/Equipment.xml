@@ -12,6 +12,7 @@
     <Member Name="feedbackOff" Datatype="Bool" />
     <Member Name="isFaulty" Datatype="Bool" />
     <Member Name="isProcessFinished" Datatype="Bool" />
+    <Member Name="valveFlowRate" Datatype="DInt" />
   </Section>
 </Sections></Interface>
       <Name>Equipment</Name>
