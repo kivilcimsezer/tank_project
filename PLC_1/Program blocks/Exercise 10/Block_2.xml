@@ -477,7 +477,7 @@
     <Access Scope="LiteralConstant" UId="21">
       <Constant>
         <ConstantType>Bool</ConstantType>
-        <ConstantValue>1</ConstantValue>
+        <ConstantValue>0</ConstantValue>
       </Constant>
     </Access>
     <Access Scope="GlobalVariable" UId="22">
